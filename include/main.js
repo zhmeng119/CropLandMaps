@@ -4,14 +4,14 @@
 mapboxgl.accessToken = 'pk.eyJ1IjoibWFwcGluZ2FmcmljYSIsImEiOiJjazh2emcxamQwNDJrM3ByemgybW5zN2c1In0.PLmPEbjp5KugFpdCcR-8YQ';
 
 var bug;
-// var AOIs = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]
+
 var centersAOI = [
     [-1.95,10.27],[-0.98,10.23],[-0.36,10.40],[-2.21,9.13],
     [-1.10,9.07],[0.08,9.08],[-1.97,8.03],[-0.94,8.08],
     [0.086,8.05],[-2.21,7.01],[-1.02,7.07],[0.092,7.02],
     [-2.28,6.13],[-1.11,6.12],[0.16,6.14],[-1.82,5.32]
 ]
-// var path_CSV = "Tile_resource/tms_sub.csv"
+
 var path_CSV = "Tile_resource/aoi123_sub_tms.csv"
 var identifyStatus = false;
 var currentAOI = 0;
@@ -40,14 +40,10 @@ var hoverField = null;
 
 ///////////////////////// Activities - Start //////////////////////////////
 
-// $( "input[type=checkbox]" ).on( "click", _countChecked );
+
 $(".select").on("click",_selectAOI);
 _checkboxHandler();
 var overlay = document.getElementById('map-overlay');
-
-// map.on('dataloading',function(x){
-//     console.log("Loading X",x.source["type"])
-// })
 
 
 ///////////////////////// Activities - End //////////////////////////////
@@ -482,12 +478,6 @@ function _removeFCCRstSource(clickedfield) {
         removeSrc(curGSFCCsourceID);
         curGSFCCsourceID = [];
     }
-    // else if(clickedfield == 'Prob') {
-    //     for(var i=0; i<curPsourceID.length; i++) {
-    //         map.removeSource(curPsourceID[i]);
-    //     };
-    //     curPsourceID = [];
-    // }
 
 }
 
@@ -610,22 +600,7 @@ function _addFCCRstLayer(aoi, clickedfield) {
             curGSFCClayerID.push(layerID);
         };
     }
-    // else if(clickedfield == 'Prob') {
-    //     for(var i=0; i<curPsourceID.length; i++) {
-    //         var sourceID = curPsourceID[i];
-    //         var layerID = 'aoi'+ aoi + '-rst-' + clickedfield + '-' + i + '-layer';
-    //         map.addLayer({
-    //             'id': layerID,
-    //             'type': 'raster',
-    //             'source': sourceID,
-    //             'layout': {
-    //                 // make layer visible by default
-    //                 'visibility': 'visible'
-    //                 },
-    //         });
-    //         curPlayerID.push(layerID);
-    //     };
-    // }
+
 
     map.zoomTo(13);
 }
@@ -651,12 +626,7 @@ function _removeFCCRstLayer(clickedfield) {
         removeLyr(curGSFCClayerID)
         curGSFCClayerID = [];
     }
-    // else if(clickedfield == 'Prob') {
-    //     for(var i=0; i<curPlayerID.length; i++) {
-    //         map.removeLayer(curPlayerID[i]);
-    //     };
-    //     curPlayerID = [];
-    // };
+
 }
 
 function _removeallRstLayer() {
