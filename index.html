@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Mapping Africa Testing</title>
+<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+
+<!-- MAPBOX API -->
+<script src="https://api.mapbox.com/mapbox-gl-js/v1.10.0/mapbox-gl.js"></script>
+<link href="https://api.mapbox.com/mapbox-gl-js/v1.10.0/mapbox-gl.css" rel="stylesheet" />
+
+<!-- D3 RESOURCE -->
+<script src="https://d3js.org/d3-collection.v1.min.js"></script>
+<script src="https://d3js.org/d3-dispatch.v1.min.js"></script>
+<script src="https://d3js.org/d3-dsv.v1.min.js"></script>
+<script src="https://d3js.org/d3-request.v1.min.js"></script>
+
+<!-- JQUERY BOOSTSTRAP API -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+
+<!-- PLUGIN RESOURCE -->
+<script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-compare/v0.4.0/mapbox-gl-compare.js"></script>
+<link
+    rel="stylesheet"
+    href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-compare/v0.4.0/mapbox-gl-compare.css"
+    type="text/css"
+/>
+
+
+
+
+<!-- LOCAL RESOURCE -->
+<link href="/css/style.css" rel="stylesheet" />
+<link href="/css/bodyStyle.css" rel="stylesheet" />	
+
+</head>
+
+
+<body>
+
+<div id="map-overlay" class="map-overlay"></div>
+
+<!-- Start: CSS Based Menu -->
+<h1 class="select-title">AOI Options</h1>
+<div class="select">
+  <select name="slct" id="slct">
+    <option selected disabled value="0">Choose an option</option>
+    <option value="1">AOI 1</option>
+    <option value="2">AOI 2</option>
+    <option value="3">AOI 3</option>
+    <option value="4">AOI 4</option>
+    <option value="5">AOI 5</option>
+    <option value="6">AOI 6</option>
+    <option value="7">AOI 7</option>
+    <option value="8">AOI 8</option>
+    <option value="9">AOI 9</option>
+    <option value="10">AOI 10</option>
+    <option value="11">AOI 11</option>
+    <option value="12">AOI 12</option>
+    <option value="13">AOI 13</option>
+    <option value="14">AOI 14</option>
+    <option value="15">AOI 15</option>
+    <option value="16">AOI 16</option>
+    <!-- <option value="999">Clear</option> -->
+  </select>
+</div>
+
+<div class="check-bowl">
+  <div class="check-atr">
+    <input type="checkbox" value="fieldPoly" id="fieldPoly">
+    Field Polygon
+  </div>
+  <div class="check-atr">
+    <input type="checkbox" value="GS" id="GS">
+    Growing Season Image
+
+    <input type="checkbox" id="GS-FCC" style="margin-left: 40px;"> 
+    GS FCC
+
+  </div>
+  <div class="check-atr">
+    <input type="checkbox" value="OS" id="OS">
+    Off Season Image
+
+    <input type="checkbox" id="OS-FCC" style="margin-left: 77px;">
+    OS FCC
+
+  </div>
+  <div class="check-atr">
+    <input type="checkbox" value="Prob" id="Prob">
+    Probability Map
+
+    <div class="rightslider">
+      <label class="switch">
+        CP
+        <input type="checkbox" id="Prob-CP"> 
+        <div class="slider round" ></div>
+      </label>
+    </div>
+
+  </div>
+</div>
+<!-- End: CSS Based Menu -->
+
+
+<div id="comparison-container">
+  <div id="map" class="cpmap"></div>
+  <div id="map-brother" class="cpmap-reset"></div>
+</div>
+<!-- <div id="map" class="cpmap"></div> -->
+<script src="include/main.js"></script>
+
+</body>
+
+</html>

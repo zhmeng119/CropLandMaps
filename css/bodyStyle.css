@@ -1,0 +1,231 @@
+/* Start: JS Based menu */
+#menu {
+    background: #fff;
+    position: absolute;
+    z-index: 1;
+    top: 10px;
+    right: 10px;
+    border-radius: 3px;
+    width: 120px;
+    border: 1px solid rgba(0, 0, 0, 0.4);
+    font-family: 'Open Sans', sans-serif;
+}
+    
+#menu a {
+    font-size: 13px;
+    color: #404040;
+    display: block;
+    margin: 0;
+    padding: 0;
+    padding: 10px;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+    text-align: center;
+}
+    
+#menu a:last-child {
+    border: none;  
+}
+    
+#menu a:hover {
+    background-color: #f8f8f8;
+    color: #404040;
+}
+    
+#menu a.active {
+    background-color: #3887be;
+    color: #ffffff;
+}
+    
+#menu a.active:hover {
+    background: #3074a4;
+}
+
+/* info board */
+.map-overlay {
+    font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+    background-color: #fff;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    border-radius: 3px;
+    position: absolute;
+    width: 25%;
+    top: 10px;
+    left: 10px;
+    padding: 10px;
+    display: none;
+    z-index: 200;
+}
+/* End: JS Based menu */
+
+
+/* Start: CSS Based menu */
+
+.select-title {
+    margin: 0 0 0.25em;
+    z-index: 200;
+    position: absolute;
+    top: 5px;
+    right: 55px;
+}
+/* Reset Select */
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -ms-appearance: none;
+    appearance: none;
+    outline: 0;
+    box-shadow: none;
+    border: 0 !important;
+    background: #2c3e50;
+    background-image: none;
+    z-index: 200;
+}
+/* Remove IE arrow */
+select::-ms-expand {
+    display: none;
+    z-index: 200;
+}
+/* Custom Select */
+.select {
+    display: flex;
+    width: 20em;
+    height: 3em;
+    line-height: 3;
+    background: #2c3e50;
+    overflow: hidden;
+    border-radius: .25em;
+    z-index: 200;
+    position: absolute;
+    top: 60px;
+    right: 5px;
+    /* position: relative;
+    margin-left: 50%;
+    margin-top: 2%; */
+}
+select {
+    flex: 1;
+    padding: 0 .5em;
+    color: #fff;
+    cursor: pointer;
+    z-index: 200;
+}
+/* Arrow */
+.select::after {
+    content: '\25BC';
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 0 1em;
+    background: #34495e;
+    cursor: pointer;
+    pointer-events: none;
+    -webkit-transition: .25s all ease;
+    -o-transition: .25s all ease;
+    transition: .25s all ease;
+    z-index: 200;
+}
+/* Transition */
+.select:hover::after {
+    color: #f39c12;
+    z-index: 200;
+}
+
+.check-bowl{
+    background: #2c3e50;
+    color: #fff;
+    padding: 0 .8em;
+    line-height: 2;
+    width: 20em;
+    display: none;
+    z-index: 200;
+    position: absolute;
+    top: 130px;
+    right: 5px;
+}
+
+
+
+  /* End: CSS Based menu */
+
+
+
+ /* Start: map comparison */
+ .switch {
+    position: relative;
+    display: inline-block;
+    width: 85px;
+    height: 26px;
+    margin-bottom: 0px;
+    
+  }
+  
+  .switch input {display:none;}
+  
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0px;
+    left: 38px;
+    right: 0px;
+    bottom: 0px;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 24px;
+    width: 24px;
+    bottom: 0px;
+    left: 0px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+
+  .slider.round {
+    border-radius: 34px;
+  }
+  
+  .slider.round:before {
+    border-radius: 50%;
+  }
+
+  input:checked + .slider {
+    background-color: #2196F3;
+  }
+  
+  input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+  }
+  
+  input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+  }
+
+  .rightslider {
+    display:inline-block;
+    float: right;
+  }
+
+  .cpmap {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+  }
+
+  .cpmap-reset{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 0;
+  }
+ /* End: map comparison */
+
+
+ 
