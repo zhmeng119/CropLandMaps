@@ -1,6 +1,8 @@
 # Croplandmaps_V2 - Explorations on Mapbox GL JS
 This project visualize the cropland maps from Ghana using Mapbox GL JS.
 
+[Cropland Maps Demo](https://agroimpacts.github.io/croplandmaps/)
+
 ## Data
 [Geojson Data for crop fields](https://github.com/agroimpacts/croplandmaps/blob/master/geojson_aoi/aoi5_boundarymerge_reid.geojson)
 
