@@ -27,7 +27,7 @@ var maptemp;
 var map = new mapboxgl.Map({
 container: 'map', // container id
 style: 'mapbox://styles/mapbox/streets-v11', // stylesheet location
-center: [-1.2, 9], // starting position [lng, lat]
+center: [-1.15, 6.59], // starting position [lng, lat]
 zoom: 8.5 // starting zoom
 });
 
