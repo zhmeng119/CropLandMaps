@@ -37,6 +37,7 @@ var map;
 ///////////////////////// Activities - Start //////////////////////////////
 // Fire up the website
 initial();
+// Add eventlistener
 $(".select").on("click",_selectAOI);
 _checkboxHandler();
 var overlay = document.getElementById('map-overlay');
@@ -48,6 +49,7 @@ var overlay = document.getElementById('map-overlay');
 ///////////////////////// Functions - Start //////////////////////////////
 
 // Part - 1
+// Create basemap
 function addBasemap() {
     var map = new mapboxgl.Map({
     container: 'map', // container id
@@ -56,9 +58,10 @@ function addBasemap() {
     zoom: 10 // starting zoom
     });
 
-    return map
+    return map;
 }
 
+// Initiate the website
 function initial(){
     map = addBasemap();
 
@@ -66,17 +69,17 @@ function initial(){
 
 // Count checkbox
 function _countChecked() {
-    var obj = $( "input:checked" )
+    var obj = $( "input:checked" );
     var n = obj.length;
-    var text = n + (n === 1 ? " is" : " are") + " checked!" 
-    console.log(text)
+    var text = n + (n === 1 ? " is" : " are") + " checked!" ;
+    console.log(text);
     // console.log(obj.val())
 };
 
 // Top-Right UI Logic: Start 
 function _selectAOI() {
-    var obj = $( "option:selected" )
-    var slctAOI = obj.val()
+    var obj = $( "option:selected" );
+    var slctAOI = obj.val();
 
     // remove previous layer and add new layer
     if(slctAOI!=currentAOI){
@@ -84,20 +87,19 @@ function _selectAOI() {
         _removeVctSource(currentAOI);
         _removeallRstLayer();
         _removeallRstSource();
-        resetSelection()
+        resetSelection();
         // console.log(slctAOI)
         currentAOI=slctAOI;
         _showOptions();
         // pan to current aoi
-        map.panTo(centersAOI[slctAOI-1])
+        map.panTo(centersAOI[slctAOI-1]);
         _addVctSource(slctAOI)
         _addVctLayer(slctAOI);
 
     }
-    
-
 }
 
+// Display 
 function _showOptions() {
     var obj = $(".check-bowl")
     obj[0].style.display="inline-block";
@@ -503,10 +505,10 @@ function removeSrc(x) {
 var curOSlayerID = [];
 var curGSlayerID = [];
 var curPlayerID = [];
-
 var curOSFCClayerID = [];
 var curGSFCClayerID = [];
 
+// Add raster layers on the map
 function _addRstLayer(aoi, clickedfield) {
 
     // Find the index of the first symbol layer in the map style
@@ -562,6 +564,7 @@ function _addRstLayer(aoi, clickedfield) {
     map.zoomTo(13);
 }
 
+// Add False Color Composite raster layers on the map
 function _addFCCRstLayer(aoi, clickedfield) {
 
     // Find the index of the first symbol layer in the map style
@@ -603,6 +606,7 @@ function _addFCCRstLayer(aoi, clickedfield) {
     map.zoomTo(13);
 }
 
+// Remove raster layers from the map
 function _removeRstLayer(clickedfield) {
     if(clickedfield == 'OS') {
         removeLyr(curOSlayerID)
@@ -616,6 +620,7 @@ function _removeRstLayer(clickedfield) {
     };
 }
 
+// Remove False Color Composite raster layers from the map
 function _removeFCCRstLayer(clickedfield) {
     if(clickedfield == 'OS-FCC') {
         removeLyr(curOSFCClayerID)
@@ -627,6 +632,7 @@ function _removeFCCRstLayer(clickedfield) {
 
 }
 
+// Remove all raster layers from the map
 function _removeallRstLayer() {
     removeLyr(curOSlayerID)
     removeLyr(curGSlayerID)
@@ -644,6 +650,7 @@ function _removeallRstLayer() {
     curGSFCClayerID = [];
 }
 
+// Remove layers from the given list
 function removeLyr(x) {
     for(let i=0; i<x.length; i++) {
         map.removeLayer(x[i]);
@@ -729,6 +736,7 @@ function identifyField(aoi, overlay){
     });
 }
 
+// Create a new map for comparison
 function createbortherMap(map) {
     var brothermap = new mapboxgl.Map({
         container: 'map-brother', // container id
@@ -741,8 +749,8 @@ function createbortherMap(map) {
     return brothermap;
 }
 
+// Find the index of the visuallized vctor layer in the map style
 function findcurVctViz() {
-    // Find the index of the vctor visuallized layer in the map style
     var layers = map.getStyle().layers;
     var firstSymbolId = "";
     for (var i = 0; i < layers.length; i++) {
