@@ -21,26 +21,22 @@ var curVCT_Instance;
 var currstSourceID = [];
 var mapbrother;
 var maptemp;
-
-
-
-var map = new mapboxgl.Map({
-container: 'map', // container id
-style: 'mapbox://styles/mapbox/streets-v11', // stylesheet location
-center: [-1.15, 6.59], // starting position [lng, lat]
-zoom: 8.5 // starting zoom
-});
-
-
-
-// load up raster and geojson resources
 var hoverField = null;
+var map;
 
+
+
+// map = new mapboxgl.Map({
+// container: 'map', // container id
+// style: 'mapbox://styles/mapbox/streets-v11', // stylesheet location
+// center: [-1.15, 6.59], // starting position [lng, lat]
+// zoom: 8.5 // starting zoom
+// });
 
 
 ///////////////////////// Activities - Start //////////////////////////////
-
-
+// Fire up the website
+initial();
 $(".select").on("click",_selectAOI);
 _checkboxHandler();
 var overlay = document.getElementById('map-overlay');
@@ -59,10 +55,12 @@ function addBasemap() {
     center: [-1.2, 9], // starting position [lng, lat]
     zoom: 10 // starting zoom
     });
+
+    return map
 }
 
 function initial(){
-    addBasemap();
+    map = addBasemap();
 
 }
 
@@ -109,7 +107,7 @@ function _checkboxHandler() {
     var obj = $( ".check-bowl" )
     // console.log(obj)
     var childs = obj.find("input")
-    console.log(childs)
+    // console.log(childs)
     
     // assign function to onlick propertity of each checkbox
     for(var i=0, len=childs.length; i<len; i++){
