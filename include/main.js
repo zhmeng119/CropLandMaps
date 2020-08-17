@@ -1,6 +1,3 @@
-// [solved]possible solution to bring vct to the front https://docs.mapbox.com/mapbox-gl-js/example/geojson-layer-in-stack/
-
-
 mapboxgl.accessToken = 'pk.eyJ1IjoibWFwcGluZ2FmcmljYSIsImEiOiJjazh2emcxamQwNDJrM3ByemgybW5zN2c1In0.PLmPEbjp5KugFpdCcR-8YQ';
 
 var bug;
@@ -12,34 +9,40 @@ var centersAOI = [
     [-2.28,6.13],[-1.11,6.12],[0.16,6.14],[-1.82,5.32]
 ]
 
-var path_CSV = "Tile_resource/aoi123_sub_tms.csv"
+var path_CSV = "Tile_resource/aoi123_sub_tms.csv";
 var identifyStatus = false;
 var currentAOI = 0;
 var currentVCT;
 var curvctSourceID = [];
 var curVCT_Instance;
 var currstSourceID = [];
+var csvOBJ;
+var csvINFO;
 var mapbrother;
 var maptemp;
 var hoverField = null;
 var map;
 
-
-
-// map = new mapboxgl.Map({
-// container: 'map', // container id
-// style: 'mapbox://styles/mapbox/streets-v11', // stylesheet location
-// center: [-1.15, 6.59], // starting position [lng, lat]
-// zoom: 8.5 // starting zoom
-// });
+// Source buckets
+var curOSsourceID = [];
+var curGSsourceID = [];
+var curPsourceID = [];
+var curOSFCCsourceID = [];
+var curGSFCCsourceID = [];
+// Layer buckets
+var curOSlayerID = [];
+var curGSlayerID = [];
+var curPlayerID = [];
+var curOSFCClayerID = [];
+var curGSFCClayerID = [];
 
 
 ///////////////////////// Activities - Start //////////////////////////////
 // Fire up the website
 initial();
-// Add eventlistener
-$(".select").on("click",_selectAOI);
-_checkboxHandler();
+// Read tile url from local csv file 
+_readtileCSV(path_CSV);
+
 var overlay = document.getElementById('map-overlay');
 
 
@@ -64,6 +67,9 @@ function addBasemap() {
 // Initiate the website
 function initial(){
     map = addBasemap();
+    // Add eventlistener
+    $(".select").on("click",_selectAOI);
+    _checkboxHandler();
 
 }
 
@@ -75,6 +81,7 @@ function _countChecked() {
     console.log(text);
     // console.log(obj.val())
 };
+
 
 // Top-Right UI Logic: Start 
 function _selectAOI() {
@@ -105,6 +112,7 @@ function _showOptions() {
     obj[0].style.display="inline-block";
 }
 
+// Assign function to checkbox
 function _checkboxHandler() {
     var obj = $( ".check-bowl" )
     // console.log(obj)
@@ -120,6 +128,7 @@ function _checkboxHandler() {
 
 }
 
+// Checkbox events
 function updateLoading(e) {
     // console.log(this)
     var clickedOBJ = this.id;
@@ -195,24 +204,18 @@ function updateLoading(e) {
     }
 }
 
-// this function is still under consideration
-function _sliderHandler() {
-    var obj = $( ".rightslider" )
-    var childs = obj.find("input")
-    console.log("slider childs: ",childs)
-}
-
+// Reset checkbox
 function resetSelection() {
     $("#GS").prop("checked", false);
     $("#OS").prop("checked", false);
     $("#Prob").prop("checked", false);
 
 }
+// Top-Right UI Logic: End 
 
-
-// Top-Right UI Logic: End
 
 // Vector Data Management: Start
+// Add vector layer with style
 function _addVctLayer(aoi) {
     // add vct layer
     var source =  "aoi" + aoi + "-vct";
@@ -245,6 +248,7 @@ function _addVctLayer(aoi) {
 
 }
 
+// Remove vector layer
 function _removeVctLayer(aoi) {
     if(aoi!=0 && currentVCT!=0){
         console.log("AOI"+aoi+" will be removed!!!")
@@ -261,6 +265,7 @@ function _removeVctLayer(aoi) {
     identifyStatus = false;
 }
 
+// Add vector source
 function _addVctSource(aoi) {
     var source = "aoi" + aoi + "-vct";
     var data = "geojson_aoi/aoi" + aoi + "_boundarymerge.geojson"
@@ -272,6 +277,7 @@ function _addVctSource(aoi) {
     curvctSourceID.push(source);
 }
 
+// remove vector source
 function _removeVctSource(aoi) {
     if(aoi!=0) {
         console.log("The source of AOI "+aoi+" will be removed!!!");
@@ -280,17 +286,11 @@ function _removeVctSource(aoi) {
     }
 
 }
-
-
 // Vector Data Management: End
 
+
 // Raster Data Management: Start
-
-// Read tile url from local csv file 
-var csvOBJ 
-_readtileCSV(path_CSV);
-var csvINFO
-
+// Read in csv
 function _readtileCSV(path) {
     d3.csv(path, function(err, data){
         // console.log(data)
@@ -298,12 +298,9 @@ function _readtileCSV(path) {
         csvINFO = _extractINFO(data)
 
     });
-
-    
-    
 }
 
-
+// Reformat tile info from csv
 function _extractINFO(data) {
     var temp = data[0].aoi
     var gs = []
@@ -374,14 +371,7 @@ function _extractINFO(data) {
     return all;
 }
 
-
-var curOSsourceID = [];
-var curGSsourceID = [];
-var curPsourceID = [];
-
-var curOSFCCsourceID = [];
-var curGSFCCsourceID = [];
-
+// Add raster source
 function _addRstSource(aoi, clickedfield) {
     var ind = aoi-1;
     if(clickedfield == 'OS') {
@@ -423,6 +413,7 @@ function _addRstSource(aoi, clickedfield) {
     }
 }
 
+// Add FCC raster source
 function _addFCCRstSource(aoi, clickedfield) {
     var ind = aoi-1;
     var option = "&redBand=3&blueBand=2&greenBand=1"
@@ -454,6 +445,7 @@ function _addFCCRstSource(aoi, clickedfield) {
 
 }
 
+// Remove raster source from the map
 function _removeRstSource(clickedfield) {
     // clear the sources stored in curOSsourceID, curGSsourceID, curPsourceID
     if(clickedfield == 'OS') {
@@ -469,6 +461,7 @@ function _removeRstSource(clickedfield) {
 
 }
 
+// Remove FCC raster source from the map
 function _removeFCCRstSource(clickedfield) {
     // clear the sources stored in curOSsourceID, curGSsourceID, curPsourceID
     if(clickedfield == 'OS-FCC') {
@@ -481,6 +474,7 @@ function _removeFCCRstSource(clickedfield) {
 
 }
 
+// Remove all raster source from the map
 function _removeallRstSource() {
     removeSrc(curOSsourceID);
     removeSrc(curGSsourceID);
@@ -495,18 +489,12 @@ function _removeallRstSource() {
     curGSFCCsourceID = [];
 }
 
+// Remove source
 function removeSrc(x) {
     for(let i=0; i<x.length; i++) {
         map.removeSource(x[i]);
     };
 }
-
-
-var curOSlayerID = [];
-var curGSlayerID = [];
-var curPlayerID = [];
-var curOSFCClayerID = [];
-var curGSFCClayerID = [];
 
 // Add raster layers on the map
 function _addRstLayer(aoi, clickedfield) {
