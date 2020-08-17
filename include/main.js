@@ -40,9 +40,6 @@ var curGSFCClayerID = [];
 ///////////////////////// Activities - Start //////////////////////////////
 // Fire up the website
 initial();
-// Read tile url from local csv file 
-_readtileCSV(path_CSV);
-
 var overlay = document.getElementById('map-overlay');
 
 
@@ -70,6 +67,8 @@ function initial(){
     // Add eventlistener
     $(".select").on("click",_selectAOI);
     _checkboxHandler();
+    // Read tile url from local csv file 
+    _readtileCSV(path_CSV);
 
 }
 
