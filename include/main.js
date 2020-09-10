@@ -9,7 +9,7 @@ var centersAOI = [
     [-2.28,6.13],[-1.11,6.12],[0.16,6.14],[-1.82,5.32]
 ]
 
-var path_CSV = "Tile_resource/aoi123_sub_tms.csv";
+var path_CSV = "Tile_resource/aoi_tms_final.csv";
 var identifyStatus = false;
 var currentAOI = 0;
 var currentVCT;
@@ -319,7 +319,9 @@ function _extractINFO(data) {
             };
 
             if(data[i].prob_tms_url != ''){
-                prob.push(data[i].prob_tms_url)
+                if(!prob.includes(data[i].prob_tms_url)){
+                    prob.push(data[i].prob_tms_url)
+                }
             };
             
         }else if(i == data.length){
