@@ -53,7 +53,7 @@ var overlay = document.getElementById('map-overlay');
 function addBasemap() {
     var map = new mapboxgl.Map({
     container: 'map', // container id
-    style: 'mapbox://styles/mapbox/streets-v11', // stylesheet location
+    style: 'mapbox://styles/mapbox/satellite-streets-v11', // stylesheet location
     center: [-1.2, 9], // starting position [lng, lat]
     zoom: 10 // starting zoom
     });
