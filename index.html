@@ -68,43 +68,71 @@
     <option value="14">AOI 14</option>
     <option value="15">AOI 15</option>
     <option value="16">AOI 16</option>
-
+    <!-- <option value="99">All AOI</option> -->
   </select>
 </div>
 
 <div class="check-bowl">
-  <div class="check-atr">
+  <div class="check-atr" id="fieldvct-block">
     <input type="checkbox" value="fieldPoly" id="fieldPoly">
     Field Polygon
   </div>
-  <div class="check-atr">
-    <input type="checkbox" value="GS" id="GS">
-    Growing Season Image
 
-    <input type="checkbox" id="GS-FCC" style="margin-left: 40px;"> 
-    GS FCC
-
+  <div id="growseason-block">
+    Growing Season Images
+    <div class="check-atr">
+      <div style="display: inline-block;">
+        <input type="checkbox" value="GS" id="GS">
+      </div>
+      <div style="display: inline-block;">TCC</div>
+      
+      <div style="display: inline-block; margin-left: 20%;">
+        <input type="checkbox" id="GS-FCC"> 
+      </div>
+      <div style="display: inline-block;">FCC</div>
+  
+    </div>
   </div>
-  <div class="check-atr">
-    <input type="checkbox" value="OS" id="OS">
-    Off Season Image
 
-    <input type="checkbox" id="OS-FCC" style="margin-left: 77px;">
-    OS FCC
 
+  <div id="offseason-block">
+    Off Season Images
+    <div class="check-atr">
+      <div style="display: inline-block;">
+        <input type="checkbox" value="OS" id="OS">
+      </div>
+      <div style="display: inline-block;">TCC</div>
+
+      <div style="display: inline-block; margin-left: 20%;">
+        <input type="checkbox" id="OS-FCC">
+      </div>
+      <div style="display: inline-block;">FCC</div>
+  
+    </div>
   </div>
-  <div class="check-atr">
-    <input type="checkbox" value="Prob" id="Prob">
-    Probability Map
 
+
+  <div class="check-atr" id="probability-block">
+    <div style="display: inline-block;">
+      <input type="checkbox" value="Prob" id="Prob">
+    </div>
+    <div style="display: inline-block;">Probability Map</div>
+
+    <div style="display: inline-block; margin-left: 6%;">Compare</div>
+    
     <div class="rightslider">
       <label class="switch">
-        CP
-        <input type="checkbox" id="Prob-CP"> 
-        <div class="slider round" ></div>
+        <input class="switch-input" type="checkbox" id="Prob-CP"/>
+        <span class="switch-label" data-on="On" data-off="Off"></span> 
+        <span class="switch-handle"></span> 
       </label>
     </div>
 
+  </div>
+  <!-- description -->
+  <div class="check-bowl-annotation">
+    <div>TCC: True Color Composite</div>
+    <div>FCC: False Color Composite</div>
   </div>
 </div>
 <!-- End: CSS Based Menu -->

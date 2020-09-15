@@ -54,8 +54,8 @@ function addBasemap() {
     var map = new mapboxgl.Map({
     container: 'map', // container id
     style: 'mapbox://styles/mapbox/satellite-streets-v11', // stylesheet location
-    center: [-1.2, 9], // starting position [lng, lat]
-    zoom: 10 // starting zoom
+    center: [-0.56, 8.18], // starting position [lng, lat]
+    zoom: 6.4 // starting zoom
     });
 
     return map;
@@ -97,10 +97,15 @@ function _selectAOI() {
         // console.log(slctAOI)
         currentAOI=slctAOI;
         _showOptions();
-        // pan to current aoi
-        map.panTo(centersAOI[slctAOI-1]);
         _addVctSource(slctAOI)
         _addVctLayer(slctAOI);
+        map.flyTo({
+            center: centersAOI[slctAOI-1],
+            zoom: 9.2,
+            speed: 0.6,
+            curve: 1,
+            essential: true
+        })
 
     }
 }
