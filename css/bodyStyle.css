@@ -106,19 +106,17 @@ select::-ms-expand {
 /* Custom Select */
 .select {
   display: flex;
-  width: 17%;
-  height: 7%;
+  width: 320px;
+  height: 48px;
   line-height: 3;
   background: #2c3e50;
   overflow: hidden;
   border-radius: .25em;
   z-index: 200;
   position: absolute;
-  top: 8%;
+  top: 70px;
   right: 0.3%;
-  /* position: relative;
-  margin-left: 50%;
-  margin-top: 2%; */
+
 }
 select {
   flex: 1;
@@ -153,11 +151,11 @@ select {
   color: #fff;
   padding: 0 .8em;
   line-height: 2;
-  width: 17%;
+  width: 17.5%;
   display: none;
   z-index: 200;
   position: absolute;
-  top: 20%;
+  top: 145px;
   right: 0.3%;
 }
 
@@ -166,7 +164,7 @@ border-top: #ffffff groove 1px;
 font-size: small; 
 font-weight: bold; 
 font-style: italic;
-margin-top: 2%;
+margin-top: 5px;
 }
 
 #probability-block {
@@ -197,7 +195,7 @@ margin-top: 1%;
 }
 
 .switch {
-  margin-left: 5%;
+  margin-left: 5px;
 	position: relative;
 	display: inline-block;
 	vertical-align: top;
