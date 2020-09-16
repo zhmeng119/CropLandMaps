@@ -151,7 +151,7 @@ select {
   color: #fff;
   padding: 0 .8em;
   line-height: 2;
-  width: 17.5%;
+  width: 320px;
   display: none;
   z-index: 200;
   position: absolute;
@@ -195,7 +195,8 @@ margin-top: 1%;
 }
 
 .switch {
-  margin-left: 5px;
+  margin-left: 1%;
+  margin-bottom: 0px;
 	position: relative;
 	display: inline-block;
 	vertical-align: top;
