@@ -9,3 +9,16 @@ body {
     width: 100%; 
 }
 
+.cpmap {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+}
+
+.cpmap-reset{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 0;
+}
