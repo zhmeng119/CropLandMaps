@@ -1,4 +1,4 @@
-mapboxgl.accessToken = 'pk.eyJ1IjoibWFwcGluZ2FmcmljYSIsImEiOiJjazh2emcxamQwNDJrM3ByemgybW5zN2c1In0.PLmPEbjp5KugFpdCcR-8YQ';
+mapboxgl.accessToken = 'pk.eyJ1IjoiemhtZW5nIiwiYSI6ImNqdm1qenB3ajFkdzE0M3BmaXdueWEwOTcifQ.m4KZ0r4F7FzMAkDK8iA-XA';
 
 var bug;
 
