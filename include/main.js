@@ -319,8 +319,8 @@ function _addVctLayer(aoi) {
         'type':'fill',
         'source':source,
         'paint': {
-            'fill-outline-color': '#993300',
-            'fill-color': '#993300',
+            'fill-outline-color': '#D9D10C',
+            'fill-color': '#D9D10C',
             'fill-opacity': [
                 'case',
                 ['boolean', ['feature-state', 'hover'], false],
