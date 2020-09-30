@@ -520,20 +520,6 @@ function _addRstSource(aoi, clickedfield) {
                 curPsourceID.push(id);
             };
         }
-
-
-
-        for(var i=0; i<csvINFO[ind].tiles[clickedfield].length; i++) {
-            var id = 'aoi'+ aoi + '-rst-' + clickedfield + '-' + i;
-            map.addSource(id, {
-                'type': 'raster',
-                'tiles': [
-                    csvINFO[ind].tiles[clickedfield][i]
-                ],
-                'tileSize': 256
-            });
-            curPsourceID.push(id);
-        };
     }
 }
 
