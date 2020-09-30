@@ -21,6 +21,7 @@ var csvINFO;
 var mapbrother;
 var maptemp;
 var hoverField = null;
+var aois = false;
 var map;
 
 // Source buckets
@@ -69,6 +70,16 @@ function initial(){
     _checkboxHandler();
     // Read tile url from local csv file 
     _readtileCSV(path_CSV);
+
+    map.on('load', function(){
+        // load up source of aois
+        var aois_pth = 'geojson_aoi/aois.geojson'
+        map.addSource('ghana-aois', {
+            'type': 'geojson',
+            'data': aois_pth,
+            'generateId': true
+        })
+    });
 
 }
 
@@ -144,6 +155,37 @@ function updateLoading(e) {
         }else {
             _removeVctLayer(currentAOI)
         };
+    }else if(clickedOBJ=="aoisPoly"){
+        if(aois==false){
+            // add aois layer
+            map.addLayer({
+                'id':'ghana-aoisoutline-viz',
+                'type':'line',
+                'source':'ghana-aois',
+                'paint': {
+                    'line-color': '#d04648',
+                }
+            });
+            map.addLayer({
+                'id':'ghana-aois-viz',
+                'type':'fill',
+                'source':'ghana-aois',
+                'paint': {
+                    'fill-opacity': 0,
+                    'fill-color': 'white',
+                    // 'fill-outline-color': '#deeed6'
+                }
+            });
+            // reset flag
+            aois = true;
+            // display info
+            identifyAOI();
+        }else{
+            // remove aois layer
+            map.removeLayer('ghana-aois-viz');
+            map.removeLayer('ghana-aoisoutline-viz');
+            aois = false;
+        }
     }else if(clickedOBJ=="GS") {
         if(curGSlayerID.length == 0) {
             _addRstSource(currentAOI,clickedOBJ)
@@ -728,6 +770,32 @@ function identifyField(aoi, overlay){
         }
         hoverField = null;
     });
+}
+
+// Identify function for indicating AOIs
+function identifyAOI(){
+    var popup = new mapboxgl.Popup({
+        closeButton: false
+    });
+    map.on('mousemove','ghana-aois-viz', function(e){
+        // 
+        if(aois){
+            map.getCanvas().style.cursor = 'pointer';
+
+            var aoiInd = e.features[0].properties['grp']
+            var content = '<h4> This is AOI '+aoiInd+'</h4>'
+            popup
+                .setLngLat(e.lngLat)
+                .setHTML(content)
+                .addTo(map);
+        }
+
+    });
+
+    map.on('mouseleave','ghana-aois-viz', function(){
+        map.getCanvas().style.cursor = '';
+        popup.remove();
+    })
 }
 
 // Create a new map for comparison
