@@ -215,6 +215,8 @@ function updateLoading(e) {
                 for(let i=0; i<x.length; i++) {
                     mapbrother.removeSource(x[i]);
                 };
+                curPlayerID = [];
+                curPsourceID = [];
             }else{
                 _removeRstLayer(clickedOBJ)
                 _removeRstSource(clickedOBJ)
