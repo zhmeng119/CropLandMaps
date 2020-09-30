@@ -148,7 +148,7 @@ function updateLoading(e) {
     // console.log(this)
     var clickedOBJ = this.id;
     console.log(clickedOBJ)
-    // load data based on the selection
+    // Load data based on the selection
     if(clickedOBJ=="fieldPoly") {
         if(currentVCT == 0){
             _addVctLayer(currentAOI)
@@ -229,16 +229,63 @@ function updateLoading(e) {
     }else if(clickedOBJ=="Prob-CP") {
         if($('#'+clickedOBJ).prop("checked")) {
             console.log("ON")
-            // make the div availabel
+            // Make the div availabel
             $("#map-brother").removeClass("cpmap-reset")
             $("#map-brother").addClass("cpmap")
             var container = '#comparison-container';
+            // Create an instance of another map object
             mapbrother = createbortherMap(map)
             maptemp = new mapboxgl.Compare(map, mapbrother, container, {
                 // Set this to enable comparing two maps by mouse movement:
                 // mousemove: true
             });
+
+            // Add listener to mapbrother
+            mapbrother.on('load', function(){
+                if($('#Prob').prop("checked")){
+                    // Remove prob imgs layer from map
+                    if(map.getLayer(curPlayerID)!=null){
+                        for(let i=0; i<curPlayerID.length; i++) {
+                            map.removeLayer(curPlayerID[i]);
+                        };
+                        curPlayerID = [];
+                    }
+                    // Remove prob imgs source from map
+                    if(map.getSource(curPsourceID)!=null){
+                        for(let i=0; i<curPsourceID.length; i++) {
+                            map.removeSource(curPsourceID[i]);
+                        };
+                        curPsourceID = [];
+                    }
+                    
+                    // Add source and layer to the new map object: mapbrother
+                    _addRstSource(currentAOI,"Prob")
+                    _addRstLayer(currentAOI,"Prob")
+                }
+            });
+
+
         }else {
+            // Remove prob imgs layer from mapbrother
+            if(mapbrother.getLayer(curPlayerID)!=null){
+                for(let i=0; i<curPlayerID.length; i++) {
+                    mapbrother.removeLayer(curPlayerID[i]);
+                };
+                curPlayerID = [];
+            }
+            // Remove prob imgs source from mapbrother
+            if(mapbrother.getSource(curPsourceID)!=null){
+                for(let i=0; i<curPsourceID.length; i++) {
+                    mapbrother.removeSource(curPsourceID[i]);
+                };
+                curPsourceID = [];
+            }
+
+            // Restore to the prob mode
+            if($('#Prob').prop("checked")){
+                _addRstSource(currentAOI,"Prob")
+                _addRstLayer(currentAOI,"Prob")
+            }
             $("#map-brother").removeClass("cpmap")
             $("#map-brother").addClass("cpmap-reset")
             console.log('OFF')
@@ -447,6 +494,35 @@ function _addRstSource(aoi, clickedfield) {
             curGSsourceID.push(id);
         };
     }else if(clickedfield == 'Prob'){
+        if($('#Prob-CP').prop("checked")){
+            // add prob imgs to mapbrother
+            for(var i=0; i<csvINFO[ind].tiles[clickedfield].length; i++) {
+                var id = 'aoi'+ aoi + '-rst-' + clickedfield + '-' + i;
+                mapbrother.addSource(id, {
+                    'type': 'raster',
+                    'tiles': [
+                        csvINFO[ind].tiles[clickedfield][i]
+                    ],
+                    'tileSize': 256
+                });
+                curPsourceID.push(id);
+            };
+        }else{
+            for(var i=0; i<csvINFO[ind].tiles[clickedfield].length; i++) {
+                var id = 'aoi'+ aoi + '-rst-' + clickedfield + '-' + i;
+                map.addSource(id, {
+                    'type': 'raster',
+                    'tiles': [
+                        csvINFO[ind].tiles[clickedfield][i]
+                    ],
+                    'tileSize': 256
+                });
+                curPsourceID.push(id);
+            };
+        }
+
+
+
         for(var i=0; i<csvINFO[ind].tiles[clickedfield].length; i++) {
             var id = 'aoi'+ aoi + '-rst-' + clickedfield + '-' + i;
             map.addSource(id, {
@@ -539,9 +615,15 @@ function _removeallRstSource() {
 
 // Remove source
 function removeSrc(x) {
-    for(let i=0; i<x.length; i++) {
-        map.removeSource(x[i]);
-    };
+    if($('#Prob-CP').prop("checked")){
+        for(let i=0; i<x.length; i++) {
+            mapbrother.removeSource(x[i]);
+        };
+    }else{
+        for(let i=0; i<x.length; i++) {
+            map.removeSource(x[i]);
+        };
+    }
 }
 
 // Add raster layers on the map
@@ -581,20 +663,38 @@ function _addRstLayer(aoi, clickedfield) {
             curGSlayerID.push(layerID);
         };
     }else if(clickedfield == 'Prob') {
-        for(var i=0; i<curPsourceID.length; i++) {
-            var sourceID = curPsourceID[i];
-            var layerID = 'aoi'+ aoi + '-rst-' + clickedfield + '-' + i + '-layer';
-            map.addLayer({
-                'id': layerID,
-                'type': 'raster',
-                'source': sourceID,
-                'layout': {
-                    // make layer visible by default
-                    'visibility': 'visible'
-                    },
-            },firstSymbolId);
-            curPlayerID.push(layerID);
-        };
+        // If mapbrother is open, push prob map to it.
+        if($('#Prob-CP').prop("checked")){
+            for(var i=0; i<curPsourceID.length; i++) {
+                var sourceID = curPsourceID[i];
+                var layerID = 'aoi'+ aoi + '-rst-' + clickedfield + '-' + i + '-layer';
+                mapbrother.addLayer({
+                    'id': layerID,
+                    'type': 'raster',
+                    'source': sourceID,
+                    'layout': {
+                        // make layer visible by default
+                        'visibility': 'visible'
+                        },
+                });
+                curPlayerID.push(layerID);
+            };
+        }else{
+            for(var i=0; i<curPsourceID.length; i++) {
+                var sourceID = curPsourceID[i];
+                var layerID = 'aoi'+ aoi + '-rst-' + clickedfield + '-' + i + '-layer';
+                map.addLayer({
+                    'id': layerID,
+                    'type': 'raster',
+                    'source': sourceID,
+                    'layout': {
+                        // make layer visible by default
+                        'visibility': 'visible'
+                        },
+                },firstSymbolId);
+                curPlayerID.push(layerID);
+            };
+        }
     }
 
     map.zoomTo(13);
@@ -688,9 +788,16 @@ function _removeallRstLayer() {
 
 // Remove layers from the given list
 function removeLyr(x) {
-    for(let i=0; i<x.length; i++) {
-        map.removeLayer(x[i]);
-    };
+    // check if CP is on
+    if($('#Prob-CP').prop("checked")){
+        for(let i=0; i<x.length; i++) {
+            mapbrother.removeLayer(x[i]);
+        };
+    }else{
+        for(let i=0; i<x.length; i++) {
+            map.removeLayer(x[i]);
+        };
+    }
 }
 
 // Raster Data Management: End
@@ -789,7 +896,6 @@ function identifyAOI(){
                 .setHTML(content)
                 .addTo(map);
         }
-
     });
 
     map.on('mouseleave','ghana-aois-viz', function(){
