@@ -207,8 +207,18 @@ function updateLoading(e) {
             _addRstSource(currentAOI,clickedOBJ)
             _addRstLayer(currentAOI,clickedOBJ)
         }else {
-            _removeRstLayer(clickedOBJ)
-            _removeRstSource(clickedOBJ)
+            // check if map compare is on
+            if($('#Prob-CP').prop("checked")){
+                for(let i=0; i<x.length; i++) {
+                    mapbrother.removeLayer(x[i]);
+                };
+                for(let i=0; i<x.length; i++) {
+                    mapbrother.removeSource(x[i]);
+                };
+            }else{
+                _removeRstLayer(clickedOBJ)
+                _removeRstSource(clickedOBJ)
+            }
         };
     }else if(clickedOBJ=="GS-FCC") {
         if(curGSFCClayerID.length==0) {
@@ -601,15 +611,10 @@ function _removeallRstSource() {
 
 // Remove source
 function removeSrc(x) {
-    if($('#Prob-CP').prop("checked")){
-        for(let i=0; i<x.length; i++) {
-            mapbrother.removeSource(x[i]);
-        };
-    }else{
-        for(let i=0; i<x.length; i++) {
-            map.removeSource(x[i]);
-        };
-    }
+
+    for(let i=0; i<x.length; i++) {
+        map.removeSource(x[i]);
+    };
 }
 
 // Add raster layers on the map
@@ -774,16 +779,10 @@ function _removeallRstLayer() {
 
 // Remove layers from the given list
 function removeLyr(x) {
-    // check if CP is on
-    if($('#Prob-CP').prop("checked")){
-        for(let i=0; i<x.length; i++) {
-            mapbrother.removeLayer(x[i]);
-        };
-    }else{
-        for(let i=0; i<x.length; i++) {
-            map.removeLayer(x[i]);
-        };
-    }
+
+    for(let i=0; i<x.length; i++) {
+        map.removeLayer(x[i]);
+    };
 }
 
 // Raster Data Management: End
