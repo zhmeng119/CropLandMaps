@@ -108,7 +108,7 @@ function _selectAOI() {
         // console.log(slctAOI)
         currentAOI=slctAOI;
         _showOptions();
-        _addVctSource(slctAOI)
+        _addVctSource(slctAOI);;
         _addVctLayer(slctAOI);
         map.flyTo({
             center: centersAOI[slctAOI-1],
@@ -117,7 +117,11 @@ function _selectAOI() {
             curve: 1,
             essential: true
         })
+    }
 
+    // check if the aois layer exists before fire it up
+    if(!map.getLayer('ghana-aois-viz')){
+        _addVctLayer("aoisPoly");
     }
 }
 
@@ -157,34 +161,10 @@ function updateLoading(e) {
         };
     }else if(clickedOBJ=="aoisPoly"){
         if(aois==false){
-            // add aois layer
-            map.addLayer({
-                'id':'ghana-aoisoutline-viz',
-                'type':'line',
-                'source':'ghana-aois',
-                'paint': {
-                    'line-color': '#d04648',
-                }
-            });
-            map.addLayer({
-                'id':'ghana-aois-viz',
-                'type':'fill',
-                'source':'ghana-aois',
-                'paint': {
-                    'fill-opacity': 0,
-                    'fill-color': 'white',
-                    // 'fill-outline-color': '#deeed6'
-                }
-            });
-            // reset flag
-            aois = true;
-            // display info
-            identifyAOI();
+            _addVctLayer("aoisPoly");
         }else{
             // remove aois layer
-            map.removeLayer('ghana-aois-viz');
-            map.removeLayer('ghana-aoisoutline-viz');
-            aois = false;
+            _removeVctLayer('aoisPoly');
         }
     }else if(clickedOBJ=="GS") {
         if(curGSlayerID.length == 0) {
@@ -322,40 +302,75 @@ function resetSelection() {
 // Vector Data Management: Start
 // Add vector layer with style
 function _addVctLayer(aoi) {
-    // add vct layer
-    var source =  "aoi" + aoi + "-vct";
-    var id_2 = "aoi" + aoi + "-vct-layer-viz";
+    if(aoi=='aoisPoly'){
+        // add aois layer
+        var source = 'ghana-aois';
+        var id_outline = 'ghana-aoisoutline-viz';
+        var id_poly = 'ghana-aois-viz';
 
-    map.addLayer({
-        'id':id_2,
-        'type':'fill',
-        'source':source,
-        'paint': {
-            'fill-outline-color': '#D9D10C',
-            'fill-color': '#D9D10C',
-            'fill-opacity': [
-                'case',
-                ['boolean', ['feature-state', 'hover'], false],
-                1,
-                0.5
-            ],
-            // 'fill-antialias': false
-        }
-    });
+        map.addLayer({
+            'id': id_outline,
+            'type': 'line',
+            'source': source,
+            'paint': {
+                'line-color': '#d04648',
+            }
+        });
+        map.addLayer({
+            'id': id_poly,
+            'type': 'fill',
+            'source': source,
+            'paint': {
+                'fill-opacity': 0,
+                'fill-color': 'white',
+                // 'fill-outline-color': '#deeed6'
+            }
+        });
 
-    // auto check for Field Polygon
-    $("#fieldPoly").prop("checked", true);
-    // record the current vct layer
-    currentVCT = aoi;
-    // turn on the function identifyField()
-    identifyStatus = true;
-    identifyField(aoi, overlay);
+        // auto check for aois indicator
+        $("#aoisPoly").prop("checked", true);
+        aois = true;
+        identifyAOI();
 
+    }else {
+        // add vct layer
+        var source =  "aoi" + aoi + "-vct";
+        var id_2 = "aoi" + aoi + "-vct-layer-viz";
+
+        map.addLayer({
+            'id':id_2,
+            'type':'fill',
+            'source':source,
+            'paint': {
+                'fill-outline-color': '#D9D10C',
+                'fill-color': '#D9D10C',
+                'fill-opacity': [
+                    'case',
+                    ['boolean', ['feature-state', 'hover'], false],
+                    1,
+                    0.5
+                ],
+                // 'fill-antialias': false
+            }
+        });
+
+        // auto check for Field Polygon
+        $("#fieldPoly").prop("checked", true);
+        // record the current vct layer
+        currentVCT = aoi;
+        // turn on the function identifyField()
+        identifyStatus = true;
+        identifyField(aoi, overlay); 
+    }
 }
 
 // Remove vector layer
 function _removeVctLayer(aoi) {
-    if(aoi!=0 && currentVCT!=0){
+    if(aoi=='aoisPoly'){
+        map.removeLayer('ghana-aois-viz');
+        map.removeLayer('ghana-aoisoutline-viz');
+        aois = false;
+    }else if(aoi!=0 && currentVCT!=0){
         console.log("AOI"+aoi+" will be removed!!!")
         // var id_1 = "aoi" + aoi + "-vct-layer";
         var id_2 = "aoi" + aoi + "-vct-layer-viz";
