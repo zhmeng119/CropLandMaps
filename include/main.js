@@ -877,7 +877,7 @@ function identifyAOI(){
             map.getCanvas().style.cursor = 'pointer';
 
             var aoiInd = e.features[0].properties['grp']
-            var content = '<h4> This is AOI '+aoiInd+'</h4>'
+            var content = '<h4>AOI '+aoiInd+'</h4>'
             popup
                 .setLngLat(e.lngLat)
                 .setHTML(content)
